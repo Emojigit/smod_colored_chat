@@ -30,7 +30,7 @@ function parse_utf8_codepoints(message, pattern)
     return table.concat(rope, "")
 end
 
-function parse_unicode(message)
+return function(message)
     for _, pattern in pairs(unicode_patterns) do
         message=parse_utf8_codepoints(message, pattern)
     end

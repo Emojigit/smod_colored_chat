@@ -1,4 +1,7 @@
 local modstorage = minetest.get_mod_storage()
+local modname = minetest.get_current_modname()
+local path = minetest.get_modpath(modname)
+local parse_unicode = dofile(path .. DIR_DELIM .. "unicode.lua")
 
 local function rgb_to_hex(rgb)
 	local hexadecimal = '#'
@@ -60,7 +63,7 @@ minetest.register_on_chat_message(function(name, message)
 		return false
 	end
 
-	say(name,minetest.get_color_escape_sequence(modstorage:get_string(name)) .. message)
+	say(name,minetest.get_color_escape_sequence(modstorage:get_string(name)) .. parse_unicode(message))
 	return true
 end)
 
@@ -78,11 +81,12 @@ minetest.register_chatcommand("rainbow", {
 		if not minetest.check_player_privs(name, {shout = true}) then
 			return false, "You need 'shout' in order to use this command"
 		end
-		local step = 360 / param:len()
+		paramm = param
+		local step = 360 / paramm:len()
  		local hue = 0
      		 -- iterate the whole 360 degrees
 		local output = ""
-      		for i = 1, param:len() do
+      		for i = 1, paramm:len() do
 			local char = param:sub(i,i)
 			if char:match("%s") then
 				output = output .. char
@@ -99,7 +103,7 @@ end,
 minetest.register_chatcommand("say", {
 	description = ("Send text without applying colour to it"),
 	func = function(name,text)
-		say(name,text)
+		say(name,parse_unicode(text))
 		return true
 	end,
 })
