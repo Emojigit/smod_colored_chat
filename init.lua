@@ -1,7 +1,7 @@
 local modstorage = minetest.get_mod_storage()
 local modname = minetest.get_current_modname()
 local path = minetest.get_modpath(modname)
-local parse_unicode = dofile(path .. DIR_DELIM .. "unicode.lua")
+-- local parse_unicode = dofile(path .. DIR_DELIM .. "unicode.lua")
 
 local function rgb_to_hex(rgb)
 	local hexadecimal = '#'
@@ -63,7 +63,7 @@ minetest.register_on_chat_message(function(name, message)
 		return false
 	end
 
-	say(name,minetest.get_color_escape_sequence(modstorage:get_string(name)) .. parse_unicode(message))
+	say(name,minetest.get_color_escape_sequence(modstorage:get_string(name))..message))
 	return true
 end)
 
