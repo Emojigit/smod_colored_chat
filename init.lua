@@ -1,7 +1,6 @@
 local modstorage = minetest.get_mod_storage()
 local modname = minetest.get_current_modname()
 local path = minetest.get_modpath(modname)
--- local parse_unicode = dofile(path .. DIR_DELIM .. "unicode.lua")
 
 local function rgb_to_hex(rgb)
 	local hexadecimal = '#'
@@ -49,21 +48,12 @@ local function color_from_hue(hue)
 	end
 end
 
-
-local function say(name,message)
-	if not minetest.check_player_privs(name, {shout = true}) then
-		minetest.display_chat_message("You need 'shout' in order to talk")
-		return
-	end
-	minetest.chat_send_all(minetest.format_chat_message(name, message))
-end
-
 minetest.register_on_chat_message(function(name, message)
 	if message:sub(1,1) == "/" or modstorage:get_string(name) == "" or modstorage:get_string(name) == "white" then
 		return false
 	end
 
-	say(name,minetest.get_color_escape_sequence(modstorage:get_string(name))..message))
+	minetest.chat_send_all(minetest.format_chat_message(name,minetest.get_color_escape_sequence(modstorage:get_string(name))..message))
 	return true
 end)
 
@@ -77,10 +67,8 @@ minetest.register_chatcommand("set_colour", {
 
 minetest.register_chatcommand("rainbow", {
 	description = ("rainbow text"),
+	privs = {shout = true},
 	func = function(name,param)
-		if not minetest.check_player_privs(name, {shout = true}) then
-			return false, "You need 'shout' in order to use this command"
-		end
 		paramm = param
 		local step = 360 / paramm:len()
  		local hue = 0
@@ -102,9 +90,9 @@ end,
 
 minetest.register_chatcommand("say", {
 	description = ("Send text without applying colour to it"),
+	privs = {shout = true},
 	func = function(name,text)
-		say(name,parse_unicode(text))
-		return true
+		minetest.chat_send_all(minetest.format_chat_message(name, text))
 	end,
 })
 
