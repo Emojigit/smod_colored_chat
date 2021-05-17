@@ -19,7 +19,7 @@ gh repo clone Emojigit/smod_colored_chat
 wget https://github.com/Emojigit/smod_colored_chat/archive/master.zip && unzip -d ./smod_colored_chat && rm master.zip
 ```
 ### Using browser
-1. Go to https://github.com/Emojigit/smod\_colored\_chat
+1. Go to https://github.com/Emojigit/smod_colored_chat
 2. Choose Code > Download ZIP
 3. Unzip it after you download the mod zip
 4. Move it into your mod directory
