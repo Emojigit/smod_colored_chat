@@ -65,6 +65,10 @@ minetest.register_chatcommand("set_colour", {
 	end,
 })
 
+local say = function(name,msg)
+	minetest.chat_send_all(minetest.format_chat_message(name, msg))
+end
+
 minetest.register_chatcommand("rainbow", {
 	description = ("rainbow text"),
 	privs = {shout = true},
@@ -87,6 +91,7 @@ minetest.register_chatcommand("rainbow", {
 		return true
 end,
 })
+
 
 minetest.register_chatcommand("say", {
 	description = ("Send text without applying colour to it"),
